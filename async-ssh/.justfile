@@ -1,3 +1,5 @@
+os_vm_args := if os() == "macos" { "--vm-type=vz --rosetta" } else { "" }
+
 default:
     just -l
 
@@ -5,11 +7,11 @@ lsvm:
   limactl ls
 
 ipvm id:
-   @limactl shell {{id}} ip address show dev lima0 \
-   | grep 'inet ' \
-   | sed -e 's/^[ \t]* //' \
-   | cut -f 2 -d' ' \
-   | awk '{split($0,a,"/"); print a[1]}'
+    @cat $(limactl info | jq -r .limaHome)/{{id}}/ssh.config \
+    | grep -E "Hostname|Port" \
+    | sed 's/^ *//' \
+    | cut -f 2 -d ' ' \
+    | paste -sd: -
 
 ipswarm name:
   @for id in $(limactl list --format '{{{{.Name}}' | grep {{name}}); do \
@@ -25,11 +27,9 @@ iplist name:
 mkvm id:
   limactl create \
     --name="{{id}}" \
-    --vm-type=vz \
-    --rosetta \
     --mount-type=virtiofs \
     --mount-writable \
-    --network=vzNAT \
+    {{os_vm_args}} \
     --cpus=1 \
     --memory=1 \
     --tty=false  \
