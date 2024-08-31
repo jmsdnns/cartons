@@ -1,0 +1,12 @@
+[package]
+name = "async-ssh"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-ssh2-tokio = { version = "0.8.12", features = ["openssl"] }
+figment = { version = "0.10.19", features = ["env", "toml"] }
+futures = "0.3.30"
+serde = { version = "1.0.209", features = ["derive", "serde_derive"] }
+tokio = "1.39.3"
+toml = "0.8.19"

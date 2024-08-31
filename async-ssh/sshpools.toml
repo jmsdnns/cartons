@@ -1,0 +1,3 @@
+ips = ["192.168.64.6","192.168.64.7"]
+key_file = "/Users/jmsdnns/.lima/_config/user"
+username = "jmsdnns"

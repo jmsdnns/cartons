@@ -1,0 +1,10 @@
+[package]
+name = "hashing-passwords"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.86"
+argon2 = "0.5.3"
+rand = "0.8.5"
+tokio = { version = "1.39.3", features = ["macros", "rt-multi-thread"] }

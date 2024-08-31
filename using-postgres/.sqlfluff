@@ -1,0 +1,3 @@
+[sqlfluff]
+dialect = postgres
+sql_file_exts = .sql

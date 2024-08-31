@@ -1,0 +1,9 @@
+[package]
+name = "config-files"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+figment = { version = "0.10.19", features = ["env", "toml"] }
+serde = { version = "1.0.209", features = ["derive", "serde_derive"] }
+toml = "0.8.19"

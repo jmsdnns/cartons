@@ -1,0 +1,11 @@
+[package]
+name = "using_postgres"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenvy = "0.15.7"
+anyhow = "1.0.86"
+tokio = { version = "1.39.3", features = ["full", "macros"] }
+sqlx = { version = "0.8.1", features = ["postgres", "runtime-tokio", "uuid", "time"] }
+uuid = { version = "1.10.0" }
