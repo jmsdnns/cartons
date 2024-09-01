@@ -5,20 +5,25 @@ use async_ssh2_tokio::Error;
 
 pub struct SSHConnection {
     client: Client,
-    ip: String,
+    host: String,
     username: String,
 }
 
 impl SSHConnection {
-    pub async fn open(ip: &str, username: &str, auth: &AuthMethod) -> Self {
-        let conn =
-            Client::connect((ip, 22), username, auth.clone(), ServerCheckMethod::NoCheck).await;
+    pub async fn open(host: &str, username: &str, auth: &AuthMethod) -> Self {
+        let dst = match host.split(":").collect::<Vec<&str>>()[..] {
+            [h, p] => (h, p.parse::<u16>().unwrap()),
+            [h] => (h, 22),
+            _ => panic!("Host value makes no sense: {}", host),
+        };
+
+        let conn = Client::connect(dst, username, auth.clone(), ServerCheckMethod::NoCheck).await;
 
         //println!("CONN: {:?}", conn);
 
         SSHConnection {
             client: conn.unwrap(),
-            ip: String::from(ip),
+            host: String::from(host),
             username: String::from(username),
         }
     }
@@ -29,11 +34,11 @@ pub struct SSHPool {
 }
 
 impl SSHPool {
-    pub async fn new(ips: Vec<&str>, username: &str, auth: &AuthMethod) -> SSHPool {
+    pub async fn new(hosts: Vec<&str>, username: &str, auth: &AuthMethod) -> SSHPool {
         let concurrency: usize = 10;
 
-        let results = stream::iter(ips)
-            .map(|ip| SSHConnection::open(ip, username, auth))
+        let results = stream::iter(hosts)
+            .map(|host| SSHConnection::open(host, username, auth))
             .buffer_unordered(concurrency)
             .collect::<Vec<SSHConnection>>()
             .await;
