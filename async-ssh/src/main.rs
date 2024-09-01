@@ -13,7 +13,7 @@ mod pools;
 
 #[derive(Debug, Deserialize)]
 struct CliConfig {
-    ips: Vec<String>,
+    hosts: Vec<String>,
     key_file: String,
     username: String,
 }
@@ -26,7 +26,7 @@ async fn main() -> Result<(), Error> {
         .unwrap();
 
     println!("CONFIG:");
-    println!("- ips: {:?}", config.ips);
+    println!("- hosts: {:?}", config.hosts);
     println!("- key file: {}", config.key_file);
     println!("- username: {}", config.username);
 
@@ -40,8 +40,8 @@ async fn main() -> Result<(), Error> {
 
     let auth = AuthMethod::with_key_file(config.key_file, None);
 
-    let ips: Vec<&str> = config.ips.iter().map(|v| v.as_str()).collect();
-    let pool = pools::SSHPool::new(ips, &config.username, &auth).await;
+    let hosts: Vec<&str> = config.hosts.iter().map(|v| v.as_str()).collect();
+    let pool = pools::SSHPool::new(hosts, &config.username, &auth).await;
 
     let cmd = "sleep $(shuf -i 1-3 -n 1) && hostname";
     println!("RESULTS:");

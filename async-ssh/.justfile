@@ -6,20 +6,20 @@ default:
 lsvm:
   limactl ls
 
-ipvm id:
+hostvm id:
     @cat $(limactl info | jq -r .limaHome)/{{id}}/ssh.config \
     | grep -E "Hostname|Port" \
     | sed 's/^ *//' \
     | cut -f 2 -d ' ' \
     | paste -sd: -
 
-ipswarm name:
+hostswarm name:
   @for id in $(limactl list --format '{{{{.Name}}' | grep {{name}}); do \
-    just ipvm $id; \
+    just hostvm $id; \
   done
 
-iplist name:
-  @just ipswarm {{name}} \
+hostlist name:
+  @just hostswarm {{name}} \
   | sed 's/.*/"&"/' \
   | paste -sd, - \
   | sed 's/.*/\[&\]/'
