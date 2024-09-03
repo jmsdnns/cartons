@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{
@@ -40,8 +42,6 @@ fn get_db_field(field: &Field) -> Option<DBField> {
         ty: type_ident.unwrap(),
     };
 
-    println!("Field: {} - Type: {}", db_field.name, db_field.ty);
-
     Some(db_field)
 }
 
@@ -62,8 +62,6 @@ pub fn derive(input: TokenStream) -> TokenStream {
         fields: fields.iter().filter_map(get_db_field).collect(),
     };
 
-    println!("DBModel: {} - Fields: {:?}", db_model.name, db_model.fields);
-
     let fields: Vec<String> = db_model.fields.iter().map(|f| f.name.to_string()).collect();
     let columns = fields.join(",");
     let input_fields = fields
@@ -80,6 +78,9 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
     let result = quote! {
         impl #ident {
+            pub fn fields() -> ::std::vec::Vec<&'static str> {
+                vec![#(#fields,)*]
+            }
             pub fn select() -> ::std::string::String {
                 ::std::string::String::from(#select_string)
             }

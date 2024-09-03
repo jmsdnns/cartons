@@ -29,3 +29,9 @@ fn gen_insert() {
         insert_sql
     );
 }
+
+#[test]
+fn gen_fields() {
+    let field_list = Book::fields();
+    assert_eq!(vec!["id", "title", "pages", "author"], field_list)
+}
