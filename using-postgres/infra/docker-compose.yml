@@ -5,6 +5,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=mydb
+      - TERM=xterm-256color # useful for tmux splits
     networks:
       - postgres-network
     ports:
