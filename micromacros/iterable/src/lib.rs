@@ -3,7 +3,7 @@ use quote::quote;
 use syn::{parse_macro_input, Data::Struct, DataStruct, DeriveInput, Fields::Named, FieldsNamed};
 
 #[proc_macro_derive(Iterable)]
-pub fn derive_iterable(input: TokenStream) -> TokenStream {
+pub fn derive(input: TokenStream) -> TokenStream {
     let DeriveInput { ident, data, .. } = parse_macro_input!(input as DeriveInput);
 
     let fields = match data {
