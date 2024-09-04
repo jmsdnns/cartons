@@ -62,30 +62,33 @@ pub fn derive(input: TokenStream) -> TokenStream {
         fields: fields.iter().filter_map(get_db_field).collect(),
     };
 
-    let fields: Vec<String> = db_model.fields.iter().map(|f| f.name.to_string()).collect();
-    let columns = fields.join(",");
-    let input_fields = fields
-        .iter()
-        .map(|_| "?".to_string())
-        .collect::<Vec<String>>()
-        .join(",");
-
-    let select_string = format!("select {} from {};", &columns, &db_model.name);
-    let insert_string = format!(
-        "insert into {} ({}) values({});",
-        &db_model.name, &columns, &input_fields
-    );
+    let db_name = db_model.name.clone();
+    let db_fields: Vec<String> = db_model.fields.iter().map(|f| f.name.to_string()).collect();
+    let db_columns = db_fields.join(",");
 
     let result = quote! {
         impl #ident {
             pub fn fields() -> ::std::vec::Vec<&'static str> {
-                vec![#(#fields,)*]
+                vec![#(#db_fields,)*]
             }
+
             pub fn select() -> ::std::string::String {
-                ::std::string::String::from(#select_string)
+                let select_string = format!("select {} from {};", #db_columns, #db_name);
+                ::std::string::String::from(select_string)
+                //::std::string::String::from(#select_string)
             }
+
             pub fn insert(&self) -> ::std::string::String {
-                ::std::string::String::from(#insert_string)
+                let insert_fields = #ident::fields()
+                    .iter()
+                    .map(|_| "?".to_string())
+                    .collect::<Vec<String>>()
+                    .join(",");
+                let insert_string = format!(
+                    "insert into {} ({}) values({});",
+                    #db_name, #db_columns, insert_fields
+                );
+                ::std::string::String::from(insert_string)
             }
         }
     };
