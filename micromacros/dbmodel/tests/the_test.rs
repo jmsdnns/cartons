@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-use micromacros::DBModel;
+use dbmodel::DBModel;
 
 #[derive(DBModel)]
 pub struct Book {
