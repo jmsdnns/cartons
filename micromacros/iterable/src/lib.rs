@@ -14,7 +14,7 @@ pub fn derive_iterable(input: TokenStream) -> TokenStream {
         _ => panic!("Uhhh wat"),
     };
 
-    let fields_iter = fields.iter().map(|field| {
+    let field_pairs = fields.iter().map(|field| {
         let field_ident = &field.ident;
         let field_name = field_ident.as_ref().unwrap().to_string();
         quote! {
@@ -23,16 +23,9 @@ pub fn derive_iterable(input: TokenStream) -> TokenStream {
     });
 
     let expanded = quote! {
-        impl #ident {
-            fn hello() -> String {
-                return "hello".to_string();
-            }
-        }
         impl Iterable for #ident {
             fn iter<'a>(&'a self) -> std::vec::IntoIter<(&'static str, &'a dyn std::any::Any)> {
-                vec![
-                    #(#fields_iter),*
-                ].into_iter()
+                vec![#(#field_pairs),*].into_iter()
             }
         }
     };
