@@ -1,0 +1,34 @@
+services:
+  db:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydb
+      - TERM=xterm-256color
+    networks:
+      - postgres-network
+    ports:
+      - 5432:5432
+    restart: always
+
+  shell:
+    image: "jdshell:latest"
+    build:
+      context: ../../app
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydb
+      - TERM=xterm-256color
+    networks:
+      - postgres-network
+    ports:
+      - 5454:5454
+    volumes:
+      - ../../app:/usr/src/app
+    command: ["sleep", "infinity"]
+
+networks:
+  postgres-network:
+    driver: bridge

@@ -1,0 +1,17 @@
+services:
+  db:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydb
+      - TERM=xterm-256color
+    networks:
+      - postgres-network
+    ports:
+      - 5432:5432
+    restart: always
+
+networks:
+  postgres-network:
+    driver: bridge
