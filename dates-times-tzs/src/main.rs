@@ -12,6 +12,9 @@ fn make_dates() {
 
     let utc_datetime = Utc::now();
     println!("UTC DT: {}", utc_datetime);
+
+    let seconds = Utc::now().timestamp();
+    println!("UTC ms: {}", seconds);
 }
 
 fn parse_dates() {
@@ -27,6 +30,10 @@ fn parse_dates() {
 
     let formatted_dt = parsed_8601.format("%Y-%m-%dT%H:%M:%S%z");
     println!("Formatted DT: {}", formatted_dt);
+
+    let seconds = Utc::now().timestamp();
+    let parsed_seconds = DateTime::from_timestamp(seconds, 0);
+    println!("Parsed Unix: {:?}", parsed_seconds);
 }
 
 fn date_math() {
