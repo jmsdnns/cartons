@@ -13,4 +13,3 @@ jmsdnns also has 7 guitars
 JSON:
 {"username":"jmsdnns","name":"Jms Dnns","top_artists":["Amon Tobin","Fiona Apple","Mars Volta","Dave Brubeck","Anfisa Letyago"],"guitars":5,"drumsets":2}
 ```
-```
