@@ -1,5 +1,5 @@
 [package]
-name = "hashing-passwords"
+name = "async-passwords"
 version = "0.1.0"
 edition = "2021"
 
