@@ -23,7 +23,7 @@ The Cartons:
 1. [Feature Demos](feature-demos/): Showcases how to use Rust's core features. There are implementations for iterators, type conversions, using enums, pattern matching, etc. It would be a decent place to start for anyone who has read the Rust book but haven't written much code yet.
 2. [Dates, Times, and Timezones](dates-times-tzs/): Simple examples of using the [Chrono](https://docs.rs/chrono/latest/chrono/) library to create and read various formats of dates and times.
 3. [Reading & Writing JSON](rw-json/): Using the [Serde](https://docs.rs/serde/latest/serde/) library to read and write JSON.
-4. [Config Files](config-files/): Using Serde for toml config files.
+4. [Config Files](rw-config-files/): Using Serde for toml config files.
 5. [Numpy-style Arrays](rusty-numpy/): Numpy users will feel right at home with Rust's [ndarray](https://docs.rs/ndarray/latest/ndarray/) library.
 6. [Micro Macros](micromacros/): Examples of different kinds of macros. Includes the basic foundation for an ORM.
 7. [Async SSH Pools](async-ssh/): Demonstrates how to run the same command on multiple remote machines simultaneously. Reads a toml config file for information about the remote machines. Includes a .justfile that knows how use Lima VMs for the remotes.
