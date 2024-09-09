@@ -21,7 +21,7 @@ Rust's async story is an evolving one. So far, I am most fond of using the [Toki
 The Cartons:
 
 1. [Feature Demos](feature-demos/): Showcases how to use Rust's core features. There are implementations for iterators, type conversions, using enums, pattern matching, etc. It would be a decent place to start for anyone who has read the Rust book but haven't written much code yet.
-2. [Dates, Times, and Timezones](dates-times-tz/): Simple examples of using the [Chrono](https://docs.rs/chrono/latest/chrono/) library to create and read various formats of dates and times.
+2. [Dates, Times, and Timezones](dates-times-tzs/): Simple examples of using the [Chrono](https://docs.rs/chrono/latest/chrono/) library to create and read various formats of dates and times.
 3. [Reading & Writing JSON](rw-json/): Using the [Serde](https://docs.rs/serde/latest/serde/) library to read and write JSON.
 4. [Config Files](config-files/): Using Serde for toml config files.
 5. [Numpy-style Arrays](rusty-numpy/): Numpy users will feel right at home with Rust's [ndarray](https://docs.rs/ndarray/latest/ndarray/) library.
