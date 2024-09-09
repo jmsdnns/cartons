@@ -10,7 +10,7 @@ infra-down:
     {{ dn }} compose -f infra/docker-compose.yml down
 
 dbshell:
-    {{ dn }} exec -it local-db-1 bash
+    @{{ dn }} exec -it infra-db-1 bash
 
 logs:
     {{ dn }} compose -f infra/docker-compose.yml logs
