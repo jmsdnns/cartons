@@ -2,12 +2,12 @@
 
 mod conversion;
 mod enums;
-mod inheritence;
+mod inheritance;
 mod iterators;
 mod matching;
 
 fn main() {
-    //inheritence::run();
+    //inheritance::run();
     //conversion::run();
     //matching::run();
     //enums::run();
