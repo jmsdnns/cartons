@@ -4,7 +4,7 @@ default:
     just -l
 
 lsvm:
-  limactl ls
+  @limactl ls --format '{{{{.Name}} | {{{{.Status}}'
 
 hostvm id:
     @cat $(limactl info | jq -r .limaHome)/{{id}}/ssh.config \
@@ -17,6 +17,12 @@ hostswarm name:
   @for id in $(limactl list --format '{{{{.Name}}' | grep {{name}}); do \
     just hostvm $id; \
   done
+
+sshconfig name:
+  @echo "hosts = $(just hostlist {{name}})" > sshpools.toml
+  @echo "key_file = \"${HOME}/.lima/_config/user\"" >> sshpools.toml
+  @echo "username = \"${USER}\"" >> sshpools.toml
+  @cat sshpools.toml
 
 hostlist name:
   @just hostswarm {{name}} \
