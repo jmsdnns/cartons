@@ -32,6 +32,7 @@ $ just mkswarm killabeez 2
 ...
 INFO[0019] Run `limactl start killabeez-1` to start the instance.
 ...
+INFO[0014] Run `limactl start killabeez-2` to start the instance.
 ```
 
 Then start the swarm.
