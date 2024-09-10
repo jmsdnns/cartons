@@ -33,13 +33,23 @@ async fn verify_password(password: String, password_hash: String) -> Result<()> 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
     let password = "meowmeowbeans".to_string();
+    println!("Password:  {}", password);
 
     let hash = hash_password(password.clone()).await?;
-    println!("HASH: {:?}", hash);
+    println!("Pass Hash: {:?}", hash);
 
-    match verify_password(password.clone(), hash).await {
-        Ok(_) => println!("ACCESS VERIFIED"),
-        Err(_) => println!("NOT AUTHORIZED"),
+    let mut guess = "meowmeowbeans".to_string();
+    println!("Trying: {}", guess);
+    match verify_password(guess, hash.clone()).await {
+        Ok(_) => println!("- verified"),
+        Err(_) => println!("- nope"),
+    }
+
+    guess = "woofwoof".to_string();
+    println!("Trying: {}", guess);
+    match verify_password(guess, hash.clone()).await {
+        Ok(_) => println!("- verified"),
+        Err(_) => println!("- nope"),
     }
 
     Ok(())
