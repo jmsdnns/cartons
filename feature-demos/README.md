@@ -10,7 +10,7 @@ The [official Rust book](https://doc.rust-lang.org/stable/book/) was a great sta
 
 ## CLI
 
-This project uses Cargo's `[[bin]]` directive to make binaries from source files other than `main.rs`. There is an `inheritance.rs` and you can run it with this flag: `--bin inheritance`.
+This project uses Cargo's `[[bin]]` directive in its [`Cargo.toml`](Cargo.toml) to make binaries from source files not named `main.rs`. There is an `inheritance.rs` and you can run it with this flag: `--bin inheritance`.
 
 That looks like this:
 
