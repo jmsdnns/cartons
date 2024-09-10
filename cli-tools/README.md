@@ -25,7 +25,7 @@ path = "src/sub_cmds.rs"
 
 ### kittyctl
 
-Help output for the main command:
+Help output for the `kittyctl` command:
 
 ```shell
 > ./target/debug/kittyctl -h
@@ -43,7 +43,7 @@ Options:
   -h, --help  Print help
 ```
 
-Help output for the `pet`` subcommand:
+Help output for the `pet` subcommand:
 
 ```shell
 > ./target/debug/kittyctl pet -h
