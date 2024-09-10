@@ -1,5 +1,7 @@
 # Reading & Writing JSON
 
+Using the [Serde](https://docs.rs/serde/latest/serde/) library to read & write JSON.
+
 ```shell
 $ cargo run
 ...

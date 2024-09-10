@@ -1,6 +1,6 @@
 # Async Postgres
 
-This project demonstrates asynchronous use of Postgres via SQLx and Tokio.
+This project demonstrates asynchronous use of Postgres via [SQLx](https://github.com/launchbadge/sqlx) and [Tokio](https://tokio.rs/).
 
 ## Containers
 
