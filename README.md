@@ -12,13 +12,9 @@ This project is where I store Rust implementations of ideas I build while learni
 - [containerd](https://containerd.io/): The best way to manage to containers. It has completely replaced docker for me.
 - [limavm](https://lima-vm.io/): My favorite way to manage local VMs during development. I use it in both Linux and macOS.
 
-## Projects
+## The List
 
 Each carton is an independent Rust project. Many of them exist to express common ideas succinctly in Rust. Some of them are significantly more complex and incorporate several of the smaller ideas to achieve something bigger.
-
-Rust's async story is an evolving one. So far, I am most fond of using the [Tokio](https://tokio.rs/) library. Each async carton below uses it.
-
-The Cartons:
 
 * [Feature Demos](feature-demos/): Showcases how to use Rust's core features. There are implementations for iterators, type conversions, using enums, pattern matching, etc. It would be a decent place to start for anyone who has read the Rust book but haven't written much code yet.
 * [Dates, Times, and Timezones](rw-dates-times/): Simple examples of how to use the Chrono library to create and read various formats of dates and times.
