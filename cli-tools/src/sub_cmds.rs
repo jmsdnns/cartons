@@ -30,7 +30,7 @@ enum Commands {
     },
 }
 
-pub fn run() {
+pub fn main() {
     let args = Cli::parse();
 
     match args.command {

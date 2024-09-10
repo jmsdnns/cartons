@@ -3,5 +3,9 @@ name = "cli-tools"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "sub-cmds"
+path = "src/sub_cmds.rs"
+
 [dependencies]
 clap = { version = "4.5.17", features = ["derive"] }
