@@ -16,7 +16,7 @@ This project is where I store Rust implementations of ideas I build while learni
 
 Each carton is an independent Rust project. Many of them exist to express common ideas succinctly in Rust. Some of them are significantly more complex and incorporate several of the smaller ideas to achieve something bigger.
 
-* [Feature Demos](feature-demos/): Showcases how to use Rust's core features. There are implementations for iterators, type conversions, using enums, pattern matching, etc. It would be a decent place to start for anyone who has read the Rust book but haven't written much code yet.
+* [Feature Demos](feature-demos/): Showcases how to use Rust's core features. There are implementations for iterators, type conversions, using enums, pattern matching, etc. Captures some of Rust's eccentricies nicely.
 * [Dates, Times, and Timezones](rw-dates-times/): Simple examples of how to use the Chrono library to create and read various formats of dates and times.
 * [Reading & Writing JSON](rw-json/): Using the Serde library to read and write JSON.
 * [Config Files](rw-config-files/): Using Serde for toml config files.

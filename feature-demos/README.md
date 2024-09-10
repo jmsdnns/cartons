@@ -6,7 +6,7 @@ The [official Rust book](https://doc.rust-lang.org/stable/book/) was a great sta
 - [Enums](src/enums.rs): Using enums to ensure complete handling of possible values & simple pattern matching.
 - [Pattern Matching](src/matching.rs): Rust makes it easy to extract data from elaborate, nested data structures.
 - [Iterators](src/iterators.rs): Iterators don't manage state by unless we implement state handling ourselves. This shows what that looks like.
-- [Trait Inheritance](src/inheritance.rs)
+- [Trait Inheritance](src/inheritance.rs): An example of how traits can be mixed and matched for complex types without the complexity found in object oriented inheritance.
 
 ## CLI
 
@@ -15,6 +15,7 @@ This project uses Cargo's `[[bin]]` directive in its [`Cargo.toml`](Cargo.toml) 
 That looks like this:
 
 ```shell
+$ cargo build
 $ cargo run --bin inheritance
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.00s
      Running `target/debug/inheritance`
