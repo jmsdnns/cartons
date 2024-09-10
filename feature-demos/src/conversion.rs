@@ -46,7 +46,7 @@ impl Clone for NumberSquared {
     }
 }
 
-pub fn run() {
+pub fn main() {
     let num = Number::from(30);
     println!("{:?}", num.value);
 

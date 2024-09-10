@@ -30,7 +30,7 @@ impl Iterator for BackpackIterator<'_> {
     }
 }
 
-pub fn run() {
+pub fn main() {
     let s = Backpack {
         things: vec![
             "laptop".to_string(),

@@ -1,58 +1,63 @@
-trait LandCapable {
-    // interface
-    //fn drive(&self);
+trait Drummer {
+    // just the interface
+    // fn play_drums(&self);
 
     // default imlpementation
-    fn drive(&self) {
-        println!("Default drive");
+    fn play_drums(&self) {
+        println!("an amazing beat is played");
     }
 }
 
-fn road_trip(vehicle: &impl LandCapable) {
-    vehicle.drive();
-}
+struct JoshFreese;
+impl Drummer for JoshFreese {}
 
-struct Sedan;
-impl LandCapable for Sedan {}
-
-#[allow(clippy::upper_case_acronyms)]
-struct SUV;
-impl LandCapable for SUV {
-    fn drive(&self) {
-        println!("SUV is driving");
+struct JonahFalco;
+impl Drummer for JonahFalco {
+    fn play_drums(&self) {
+        println!("falco is ripping those drums");
     }
 }
 
-trait WaterCapable {
-    fn float(&self) {
-        println!("Default float");
+fn needs_drummer(musician: &impl Drummer) {
+    musician.play_drums();
+}
+
+trait Guitarist {
+    fn play_guitar(&self) {
+        println!("a heavy guitar riff is played");
     }
 }
+
+struct JamesHetfield;
+impl Guitarist for JamesHetfield {}
 
 // Super trait
-trait Amphibious: WaterCapable + LandCapable {}
+trait MultiMusician: Guitarist + Drummer {}
 
-struct Hovercraft;
-impl Amphibious for Hovercraft {}
-impl LandCapable for Hovercraft {}
-impl WaterCapable for Hovercraft {
-    fn float(&self) {
-        println!("Hovercraft is floating");
+struct DaveGrohl;
+impl MultiMusician for DaveGrohl {}
+impl Drummer for DaveGrohl {}
+impl Guitarist for DaveGrohl {
+    fn play_guitar(&self) {
+        println!("DaveGrohl is floating");
     }
 }
 
-fn traverse_frozen_lake(vehicle: &impl Amphibious) {
-    vehicle.drive();
-    vehicle.float();
+fn record_song(musician: &impl MultiMusician) {
+    musician.play_drums();
+    musician.play_guitar();
 }
 
-pub fn run() {
-    let car = Sedan;
-    road_trip(&car);
+pub fn main() {
+    let jf = JoshFreese;
+    needs_drummer(&jf);
 
-    let suv = SUV;
-    road_trip(&suv);
+    let jf = JonahFalco;
+    needs_drummer(&jf);
 
-    let hc = Hovercraft;
-    traverse_frozen_lake(&hc);
+    let jh = JamesHetfield;
+    jh.play_guitar();
+
+    let dg = DaveGrohl;
+    record_song(&dg);
 }
