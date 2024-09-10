@@ -30,7 +30,7 @@ The Cartons:
 8. [Async Password Hashing](async-passwords): Password hashing where the actual hashing is done in a background thread to keep the cpu bound work off the main thread.
 9. [Async Postgres w/ DB Migrations](async-postgres/): Concise example of how to use SQLx to query and manage Postgres. Includes a docker compose file for running Postgres in a container.
 10. [Full REST API](webb/): A REST API build with the Axum web framework. It provides endpoints for creating an account, logging in, and an endpoint that requires authentication for access. Auth is built with JWT Tokens. It uses SQLx with Postgres for storage and database migrations. It also provides containers for both Postgres and the app. Axum Extractors are for reading JSON payloads and for extracting auth tokens from headers.
-11. [Async gRPC](geerpc/): Uses the [Tonic](https://docs.rs/tonic/latest/tonic/) library for async gRPC.
+11. [Async gRPC](geerpc/): Uses the Tonic library for async gRPC.
 
 ## Code Comments
 
