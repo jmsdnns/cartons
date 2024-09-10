@@ -1,5 +1,5 @@
 [package]
-name = "config-files"
+name = "rw-config-files"
 version = "0.1.0"
 edition = "2021"
 

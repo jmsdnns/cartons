@@ -1,6 +1,6 @@
-# Using Postgres
+# Async Postgres
 
-This project demonstrates asynchronous use of Postgres via SQLx.
+This project demonstrates asynchronous use of Postgres via [SQLx](https://github.com/launchbadge/sqlx) and [Tokio](https://tokio.rs/).
 
 ## Containers
 
@@ -20,7 +20,7 @@ $ limactl start default
 The main things here are just turning on a postgres container (infra-up), opening a shell on the database server (dbshell), and shutting postgres down (infra-down).
 
 ```shell
-$ cd using-postgres
+$ cd async-postgres
 $ just
 Available recipes:
     dbshell

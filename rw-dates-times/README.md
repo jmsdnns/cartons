@@ -1,5 +1,7 @@
 # Date, Times, and Timezones
 
+Using the [Chrono](https://docs.rs/chrono/latest/chrono/) library to read & write dates, times, datetimes, and timezones
+
 ```shell
 $ cargo run
 ...

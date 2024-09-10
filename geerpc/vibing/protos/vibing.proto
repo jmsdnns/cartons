@@ -1,0 +1,21 @@
+syntax = "proto3";
+package vibing;
+
+service Vibing {
+    rpc Vibe (VibeRequest) returns (VibeResponse);
+}
+
+
+message VibeRequest {
+    string comment = 1;
+
+    enum Vibe {
+        BUSSIN = 0;
+        SKRRT = 1;
+    }
+    Vibe vibe = 2;
+}
+
+message VibeResponse {
+    string confirmation = 1;
+}

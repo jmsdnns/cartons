@@ -1,5 +1,5 @@
 [package]
-name = "dates-times-tzs"
+name = "rw-dates-times"
 version = "0.1.0"
 edition = "2021"
 

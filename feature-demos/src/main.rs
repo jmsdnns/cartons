@@ -6,10 +6,4 @@ mod inheritance;
 mod iterators;
 mod matching;
 
-fn main() {
-    //inheritance::run();
-    //conversion::run();
-    //matching::run();
-    //enums::run();
-    iterators::run();
-}
+fn main() {}

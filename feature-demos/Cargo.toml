@@ -3,4 +3,24 @@ name = "feature-demos"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "conversion"
+path = "src/conversion.rs"
+
+[[bin]]
+name = "matching"
+path = "src/matching.rs"
+
+[[bin]]
+name = "enums"
+path = "src/enums.rs"
+
+[[bin]]
+name = "iterators"
+path = "src/iterators.rs"
+
+[[bin]]
+name = "inheritance"
+path = "src/inheritance.rs"
+
 [dependencies]

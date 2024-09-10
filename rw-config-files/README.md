@@ -1,6 +1,10 @@
-# Config Files
+# Using Config Files
 
-Config 1:
+Using the [Serde](https://docs.rs/serde/latest/serde/) library to read TOML config files.
+
+## Example Configs
+
+Config 1 does not have the `maybe_matrix` field.
 
 ```toml
 a_list = ["woof", "woof", "WOOF"]
@@ -10,7 +14,7 @@ a_float = 3.14
 maybe_string = "string was here"
 maybe_ints = [3, 42, 180, 360]
 ```
-Config 2:
+Config 2 does not have `maybe_string` or `maybe_ints`. It also has a field not present in the Rust struct, `maybe`.
 
 ```toml
 a_list = ["meow", "meow", "MEOW"]

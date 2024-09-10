@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 struct Inner {
     i_label: String,
     i_num: i32,
@@ -41,7 +43,7 @@ fn get_inner_opt(o: &Outer) -> &str {
     }
 }
 
-pub fn run() {
+pub fn main() {
     let mut o = Outer {
         o_label: "The Outer Struct".to_string(),
         o_num: 42,

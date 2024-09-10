@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 enum Genre {
     Punk,
     Metal,
@@ -134,7 +136,7 @@ fn explore_drums() {
     }
 }
 
-pub fn run() {
+pub fn main() {
     guess_opinions();
     explore_drums();
 }
