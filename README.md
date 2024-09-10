@@ -20,6 +20,7 @@ Each carton is an independent Rust project. Many of them exist to express common
 * [Dates, Times, and Timezones](rw-dates-times/): Simple examples of how to use the Chrono library to create and read various formats of dates and times.
 * [Reading & Writing JSON](rw-json/): Using the Serde library to read and write JSON.
 * [Config Files](rw-config-files/): Using Serde for toml config files.
+* [CLI Tools](cli-tools/): Building CLI tools with the Clap library.
 * [Numpy-style Arrays](rusty-numpy/): Numpy users will feel right at home with Rust's ndarray.
 * [Micro Macros](micromacros/): Examples of different kinds of macros. Includes the basic foundation for an ORM.
 * [Async SSH Pools](async-ssh/): Demonstrates how to run the same command on multiple remote machines simultaneously. Reads a toml config file for information about the remote machines. Includes a .justfile that knows how use Lima VMs for the remotes.
