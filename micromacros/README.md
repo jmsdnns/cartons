@@ -4,8 +4,8 @@ Several projects using macros to solve small problems that focus on the macro, n
 
 ## Projects
 
-1. [Simple ORM](dbmodel/): Some of the metaprogramming building blocks for generating SQL from struct definitions. [ [tests](dbmodel/tests/the_test.rs) ]
-2. [Iterable Structs](iterable/): A macro that uses Rust's `Any` type to allow iterating across field name-value pairs, similar to what one might do in Python. The Any type essentially erases the actual type information, but reflection can be used to go back from the `Any` to actual types. [ [tests](iterable/tests/the_test.rs) ]
+* [Simple ORM](dbmodel/): Some of the metaprogramming building blocks for generating SQL from struct definitions. [ [tests](dbmodel/tests/the_test.rs) ]
+* [Iterable Structs](iterable/): A macro that uses Rust's `Any` type to allow iterating across field name-value pairs, similar to what one might do in Python. The Any type essentially erases the actual type information, but reflection can be used to go back from the `Any` to actual types. [ [tests](iterable/tests/the_test.rs) ]
 
 ## CLI
 
