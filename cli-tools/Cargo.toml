@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [[bin]]
-name = "sub-cmds"
+name = "kittyctl"
 path = "src/sub_cmds.rs"
 
 [dependencies]
