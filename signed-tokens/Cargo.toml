@@ -1,0 +1,9 @@
+[package]
+name = "signed-tokens"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = { version = "0.4.38", features = ["serde"] }
+jsonwebtoken = "9.3.0"
+serde = { version = "1.0.210", features = ["derive"] }
