@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [[bin]]
+name = "basic"
+path = "src/basic.rs"
+
+[[bin]]
 name = "kittyctl"
 path = "src/sub_cmds.rs"
 

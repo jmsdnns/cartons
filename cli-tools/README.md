@@ -21,7 +21,53 @@ path = "src/sub_cmds.rs"
 
 ## Projects
 
+* basic: A simple example that demonstrates parameters, flags, and stacking flags [ [source code](src/basic.rs) ]
 * kittyctl: A tool that demonstrates how to use Clap for sub commands, each with their own inputs. Creates a binary called `kittyctl` with subcommands that help with kitty management. [ [source code](src/sub_cmds.rs) ]
+
+### basic
+
+Help output for the basic command:
+
+```shell
+$ ./target/debug/basic -h
+Usage: basic [OPTIONS] [SOMETHING]
+
+Arguments:
+  [SOMETHING]  Some parameter
+
+Options:
+  -c, --config <FILE>  This param must be valid file path
+  -v, --verbose...     Allows using -v, -vv, or -vvv
+  -h, --help           Print help
+  -V, --version        Print version
+```
+
+Called without any parameters:
+
+```shell
+$ ./target/debug/basic
+Something: not provided
+Config: not provided
+Verbose mode is off
+```
+
+Called with a `something` parameter and -v for some verbosity
+
+```shell
+$ ./target/debug/basic meow -v
+Something: meow
+Config: not provided
+Verbose mode is kind of on
+```
+
+Called a `something` parameter, the -c flag and a file path, and maximum verbosity
+
+```shell
+$ ./target/debug/basic meow -c "../README.md" -vvv
+Something: meow
+Config: ../README.md
+Verbose mode is very on
+```
 
 ### kittyctl
 
