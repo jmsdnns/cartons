@@ -22,8 +22,8 @@ Each carton is an independent Rust project. Many of them exist to express common
 * [Config Files](rw-config-files/): Using Serde for toml config files.
 * [CLI Tools](cli-tools/): Building CLI tools with the Clap library.
 * [Numpy-style Arrays](rusty-numpy/): Numpy users will feel right at home with Rust's ndarray.
-* [Micro Macros](micromacros/): Examples of different kinds of macros. Includes the basic foundation for an ORM.
 * [Async SSH Pools](async-ssh/): Demonstrates how to run the same command on multiple remote machines simultaneously. Reads a toml config file for information about the remote machines. Includes a .justfile that knows how use Lima VMs for the remotes.
+* [Micro Macros](micromacros/): Examples of different kinds of macros. Includes the basic foundation for an ORM.
 * [Signed Tokens](signed-tokens/): Creates signed JWT tokens and demonstrates how validation of JWT fields is automatic.
 * [Async Password Hashing](async-passwords): Password hashing where the actual hashing is done in a background thread to keep the cpu bound work off the main thread.
 * [Async Postgres w/ DB Migrations](async-postgres/): Concise example of how to asynchronously query and manage Postgres. Includes a compose file for running Postgres with the project
