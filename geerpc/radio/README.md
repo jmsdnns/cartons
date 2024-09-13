@@ -1,6 +1,6 @@
 # Radio
 
-_If you haven't used Tonic before, please check out the [basic project](../basic) first. This doc assumes you have knowledge that can be gained there._
+_If you haven't used Tonic before, please check out the [vibing project](../vibing) first. This doc assumes you have knowledge that can be gained there._
 
 This project is keeps things simple while demonstrating multiple types of message passing. One call receives a request and responds, another receives a request and streams responses back, and the last call uses full-duplex streaming so the client can stream requests to the server which streams responses back.
 
