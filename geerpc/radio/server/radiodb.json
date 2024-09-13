@@ -1,0 +1,78 @@
+{
+    "bandinfos": [
+        {
+            "name": "The Mars Volta",
+            "members": [
+                {
+                    "name": "Omar Rodriguez-Lopez",
+                    "role": "Guitar"
+                },
+                {
+                    "name": "Cedric Bixler",
+                    "role": "Vocals"
+                },
+                {
+                    "name": "Linda-Philomène Tsoungui",
+                    "role": "Drums"
+                },
+                {
+                    "name": "Eva Gardner",
+                    "role": "Bass"
+                },
+                {
+                    "name": "Marcel Rodriguez-Lopez",
+                    "role": "Keyboards and Percussion"
+                },
+                {
+                    "name": "Leo Genovese",
+                    "role": "Piano"
+                }
+            ],
+            "bio": "Kinda prog, kinda punk, kinda latin, with some of the best musicians ever"
+        },
+        {
+            "name": "Converge",
+            "members": [
+                {
+                    "name": "Ben Koller",
+                    "role": "Drums"
+                },
+                {
+                    "name": "Jacob Bannon",
+                    "role": "Vocals"
+                },
+                {
+                    "name": "Nate Newton",
+                    "role": "Bass"
+                },
+                {
+                    "name": "Kurt Ballou",
+                    "role": "Guitar"
+                }
+            ],
+            "bio": "New England metalcore perfection"
+        }
+    ],
+    "songs": [
+        {
+            "name": "Drunkenship of Lanterns",
+            "band": "The Mars Volta",
+            "album": "Deloused In The Comatorium"
+        },
+        {
+            "name": "Cygnus....Vismund Cygnus",
+            "band": "The Mars Volta",
+            "album": "Frances The Mute"
+        },
+        {
+            "name": "Dark Horse",
+            "band": "Converge",
+            "album": "Axe To Fall"
+        },
+        {
+            "name": "Reap What You Sew",
+            "band": "Converge",
+            "album": "Axe To Fall"
+        }
+    ]
+}

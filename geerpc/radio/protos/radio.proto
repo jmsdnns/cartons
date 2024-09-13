@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package radio;
+
+service Radio {
+    rpc GetBand(BandQuery) returns (BandInfo) {}
+    rpc ListSongs(BandQuery) returns (stream Song) {}
+    rpc Radio(stream RadioNext) returns (stream Song) {}
+}
+
+message BandQuery {
+    string name = 1;
+}
+
+message BandMember {
+    string name = 1;
+    string role = 2;
+}
+
+message BandInfo {
+    string name = 1;
+    string bio = 2;
+    repeated BandMember members = 3;
+}
+
+message Song {
+    string name = 1;
+    string band = 2;
+    string album = 3;
+}
+
+message RadioNext {
+    int32 index = 1; 
+}
+
