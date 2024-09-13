@@ -2,7 +2,7 @@
 
 _If you haven't used Tonic before, please check out the [vibing project](../vibing) first. This doc assumes you have knowledge that can be gained there._
 
-This project is keeps things simple while demonstrating multiple types of message passing. One call receives a request and responds, another receives a request and streams responses back, and the last call uses full-duplex streaming so the client can stream requests to the server which streams responses back.
+This project is keeps things simple while demonstrating multiple types of message passing. One call receives a request and responds, another receives a request and streams responses back, and the last call has requests streaming in with responses streaming out.
 
 The service itself is implemented in the form of a simple music service. No user input is necessary.
 
@@ -57,6 +57,10 @@ $ cargo run
 
 The radio service has three functions and five message types.
 
+The `BandQuery` message is simply a way for clients to send a band name to the server. The `RadioNext` message is how the client tells the server which song it wants from the playlist. By default, the client simply counts from 0 up.
+
+The other three message types, `Song`, `BandInfo`, and `BandMember` are used to pass data from the radio's artist database.
+
 ```protobuf
 syntax = "proto3";
 
@@ -98,6 +102,16 @@ The actual definition is here: [protos/radio.proto](protos/radio.proto)
 
 ## Implementations
 
+The server has three main files: `src/main.rs`, `src/data.rs`, and `radiodb.json`. 
+
+The json file stores all of the information about bands and songs and `data.rs` contains functions for transforming that json into rust structs. The main file implements the functions defined in the proto file: `get_band`, `list_songs`, and `radio`. 
+
+The `list_songs` function is the first time some new ideas are shown, relative to [vibing](../vibing). The first new idea is that we use a background thread to do the work of determining what data should be streamed to the client. The other new idea is that the background thread uses [Channels](https://doc.rust-lang.org/std/sync/mpsc/index.html) to communicate data to the main thread when it is ready to be streamed out to the client.
+
+The `radio` function gets even more interesting. It uses Tonic's builtin streaming to receive requests from the client and it uses Tokio's `async_stream` for streaming responses to the client. The strangest part of the code, imo, is the way the output from `async_stream::try_stream!` is [pinned](https://doc.rust-lang.org/std/pin/struct.Pin.html) and then returned from the function as a RadioStream instance. Tonic can call `output.next()` to wait for an incoming request from the client to produce a response which is then streamed out to the client.
+
 [ [server code](server/src/main.rs) ]
+
+The client is essentially the opposite of the server, but it is less complicated. The `run_radio` function is similar to the `radio` function in the server, so I'll leave understanding it as an exercise to you.
 
 [ [client code](client/src/main.rs) ]
