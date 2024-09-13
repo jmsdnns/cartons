@@ -77,7 +77,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("*** GET LIST OF CONVERGE SONGS ***");
     run_list_songs(&mut client, "Converge".to_string()).await?;
 
-    println!("*** GET LIST OF CONVERGE SONGS ***");
+    println!("*** TURN ON THE RADIO ***");
     run_radio(&mut client).await?;
 
     Ok(())
