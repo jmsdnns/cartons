@@ -66,29 +66,42 @@ pub fn derive(input: TokenStream) -> TokenStream {
     let db_fields: Vec<String> = db_model.fields.iter().map(|f| f.name.to_string()).collect();
     let db_columns = db_fields.join(",");
 
+    let field_idents = fields.iter().map(|f| &f.ident);
+
     let result = quote! {
         impl #ident {
             pub fn fields() -> ::std::vec::Vec<&'static str> {
                 vec![#(#db_fields,)*]
             }
 
-            pub fn select() -> ::std::string::String {
-                let select_string = format!("select {} from {};", #db_columns, #db_name);
-                ::std::string::String::from(select_string)
-                //::std::string::String::from(#select_string)
+            pub async fn select(pool: &::sqlx::sqlite::SqlitePool, id: i32) -> #ident {
+                let select_string = format!(
+                    r#"select {} from {} where id = $1;"#,
+                    #db_columns, #db_name
+                );
+                ::sqlx::query_as(select_string.as_str())
+                    .bind(id)
+                    .fetch_one(pool)
+                    .await
+                    .unwrap();
             }
 
-            pub fn insert(&self) -> ::std::string::String {
+            pub async fn insert(&self, pool: &::sqlx::sqlite::SqlitePool) -> ::std::vec::Vec<::sqlx::sqlite::SqliteRow> {
                 let insert_fields = #ident::fields()
                     .iter()
-                    .map(|_| "?".to_string())
+                    .enumerate()
+                    .map(|(idx, _)| format!("${}", idx+1))
                     .collect::<Vec<String>>()
                     .join(",");
                 let insert_string = format!(
-                    "insert into {} ({}) values({});",
+                    r#"INSERT INTO {} ({}) VALUES ({});"#,
                     #db_name, #db_columns, insert_fields
                 );
-                ::std::string::String::from(insert_string)
+                ::sqlx::query(insert_string.as_str())
+                    #(.bind(&self.#field_idents))*
+                    .fetch_all(pool)
+                    .await
+                    .unwrap()
             }
         }
     };
