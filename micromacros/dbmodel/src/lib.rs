@@ -106,6 +106,19 @@ pub fn derive(input: TokenStream) -> TokenStream {
                     .await
                     .unwrap()
             }
+
+            pub async fn delete(pool: &::sqlx::sqlite::SqlitePool, id: i32) {
+                let query = format!(
+                    r#"DELETE FROM {} WHERE ID = $1;"#,
+                    #db_name
+                );
+
+                ::sqlx::query(query.as_str())
+                    .bind(id)
+                    .execute(pool)
+                    .await
+                    .unwrap();
+            }
         }
     };
 

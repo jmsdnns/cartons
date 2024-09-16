@@ -3,7 +3,7 @@ use dbmodel::DBModel;
 use sqlx::sqlite::{SqliteConnectOptions, SqlitePool};
 use std::fs;
 
-#[derive(DBModel, sqlx::FromRow)]
+#[derive(DBModel, sqlx::FromRow, Debug)]
 pub struct Book {
     id: i32,
     title: String,
@@ -40,13 +40,26 @@ async fn gen_insert() {
     };
     book.insert(&pool).await;
 
-    let b = loadbook(&pool, 1728).await;
+    let b = loadbook(&pool, 1728).await.unwrap();
     assert_eq!(b.id, book.id);
     assert_eq!(b.title, book.title);
     assert_eq!(b.pages, book.pages);
     assert_eq!(b.author, book.author);
 
     rmdb("gen_insert");
+}
+
+#[tokio::test]
+async fn gen_delete() {
+    // setup
+    let pool = mkdb("gen_delete").await;
+    addbook(&pool, 42, "Meow", 10, "Sierra").await;
+
+    Book::delete(&pool, 42).await;
+    loadbook(&pool, 42).await.unwrap_err();
+
+    // teardown
+    rmdb("gen_delete");
 }
 
 #[test]
@@ -95,10 +108,9 @@ async fn addbook(pool: &SqlitePool, id: i32, title: &str, pages: i32, author: &s
         .unwrap();
 }
 
-async fn loadbook(pool: &SqlitePool, id: i32) -> Book {
+async fn loadbook(pool: &SqlitePool, id: i32) -> Result<Book, sqlx::error::Error> {
     sqlx::query_as(r#"SELECT * FROM book WHERE id = $1"#)
         .bind(id)
         .fetch_one(pool)
         .await
-        .unwrap()
 }
