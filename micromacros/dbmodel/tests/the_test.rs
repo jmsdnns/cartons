@@ -11,6 +11,50 @@ pub struct Book {
     author: String,
 }
 
+#[tokio::test]
+async fn gen_select() {
+    // setup
+    let pool = mkdb("gen_select").await;
+    addbook(&pool, 42, "Meow", 10, "Sierra").await;
+
+    let b = Book::select(&pool, 42).await;
+    assert_eq!(b.id, 42);
+    assert_eq!(b.title, "Meow".to_string());
+    assert_eq!(b.pages, 10);
+    assert_eq!(b.author, "Sierra".to_string());
+
+    // teardown
+    rmdb("gen_select");
+}
+
+#[tokio::test]
+async fn gen_insert() {
+    // setup
+    let pool = mkdb("gen_insert").await;
+
+    let book = Book {
+        id: 1728,
+        title: "My Story".to_string(),
+        pages: 1337,
+        author: "Jms Dnns".to_string(),
+    };
+    book.insert(&pool).await;
+
+    let b = loadbook(&pool, 1728).await;
+    assert_eq!(b.id, book.id);
+    assert_eq!(b.title, book.title);
+    assert_eq!(b.pages, book.pages);
+    assert_eq!(b.author, book.author);
+
+    rmdb("gen_insert");
+}
+
+#[test]
+fn gen_fields() {
+    let field_list = Book::fields();
+    assert_eq!(vec!["id", "title", "pages", "author"], field_list)
+}
+
 async fn mkdb(dbname: &str) -> SqlitePool {
     let options = SqliteConnectOptions::new()
         .filename(dbname)
@@ -40,40 +84,21 @@ fn rmdb(dbname: &str) {
     fs::remove_file(dbname).unwrap();
 }
 
-async fn addbook(pool: &SqlitePool, id: i32) {
-    sqlx::query(r#"INSERT INTO book VALUES ($1, "Meow", 10, "Sierra")"#)
+async fn addbook(pool: &SqlitePool, id: i32, title: &str, pages: i32, author: &str) {
+    sqlx::query(r#"INSERT INTO book VALUES ($1, $2, $3, $4)"#)
         .bind(id)
+        .bind(title)
+        .bind(pages)
+        .bind(author)
         .execute(pool)
         .await
         .unwrap();
 }
 
-#[tokio::test]
-async fn gen_insert() {
-    let pool = mkdb("gen_insert").await;
-
-    let book = Book {
-        id: 1728,
-        title: "My Story".to_string(),
-        pages: 1337,
-        author: "Jms Dnns".to_string(),
-    };
-
-    book.insert(&pool).await;
-
-    rmdb("gen_insert");
-}
-
-#[tokio::test]
-async fn gen_select() {
-    let pool = mkdb("gen_select").await;
-    addbook(&pool, 42).await;
-    let book = Book::select(&pool, 42);
-    rmdb("gen_select");
-}
-
-#[test]
-fn gen_fields() {
-    let field_list = Book::fields();
-    assert_eq!(vec!["id", "title", "pages", "author"], field_list)
+async fn loadbook(pool: &SqlitePool, id: i32) -> Book {
+    sqlx::query_as(r#"SELECT * FROM book WHERE id = $1"#)
+        .bind(id)
+        .fetch_one(pool)
+        .await
+        .unwrap()
 }

@@ -76,14 +76,15 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
             pub async fn select(pool: &::sqlx::sqlite::SqlitePool, id: i32) -> #ident {
                 let select_string = format!(
-                    r#"select {} from {} where id = $1;"#,
+                    r#"SELECT {} FROM {} WHERE ID = $1;"#,
                     #db_columns, #db_name
                 );
+
                 ::sqlx::query_as(select_string.as_str())
                     .bind(id)
                     .fetch_one(pool)
                     .await
-                    .unwrap();
+                    .unwrap()
             }
 
             pub async fn insert(&self, pool: &::sqlx::sqlite::SqlitePool) -> ::std::vec::Vec<::sqlx::sqlite::SqliteRow> {
@@ -93,10 +94,12 @@ pub fn derive(input: TokenStream) -> TokenStream {
                     .map(|(idx, _)| format!("${}", idx+1))
                     .collect::<Vec<String>>()
                     .join(",");
+
                 let insert_string = format!(
                     r#"INSERT INTO {} ({}) VALUES ({});"#,
                     #db_name, #db_columns, insert_fields
                 );
+
                 ::sqlx::query(insert_string.as_str())
                     #(.bind(&self.#field_idents))*
                     .fetch_all(pool)
