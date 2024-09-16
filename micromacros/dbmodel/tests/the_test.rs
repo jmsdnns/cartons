@@ -72,6 +72,10 @@ fn gen_fields() {
     assert_eq!(vec!["id", "title", "pages", "author"], field_list)
 }
 
+//
+// HELPERS
+//
+
 async fn mkdb(dbname: &str) -> SqlitePool {
     let options = SqliteConnectOptions::new()
         .filename(dbname)
