@@ -17,7 +17,7 @@ async fn gen_select() {
     let pool = mkdb("gen_select").await;
     addbook(&pool, 42, "Meow", 10, "Sierra").await;
 
-    let b = Book::select(&pool, 42).await;
+    let b = Book::select(&pool, 42).await.unwrap();
     assert_eq!(b.id, 42);
     assert_eq!(b.title, "Meow".to_string());
     assert_eq!(b.pages, 10);
@@ -38,7 +38,9 @@ async fn gen_insert() {
         pages: 1337,
         author: "Jms Dnns".to_string(),
     };
-    book.insert(&pool).await;
+    let result = book.insert(&pool).await.unwrap();
+    let count = result.rows_affected();
+    assert_eq!(count, 1);
 
     let b = loadbook(&pool, 1728).await.unwrap();
     assert_eq!(b.id, book.id);
@@ -55,7 +57,9 @@ async fn gen_delete() {
     let pool = mkdb("gen_delete").await;
     addbook(&pool, 42, "Meow", 10, "Sierra").await;
 
-    Book::delete(&pool, 42).await;
+    let result = Book::delete(&pool, 42).await.unwrap();
+    let count = result.rows_affected();
+    assert_eq!(count, 1);
     loadbook(&pool, 42).await.unwrap_err();
 
     // teardown

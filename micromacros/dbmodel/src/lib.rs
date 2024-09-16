@@ -74,7 +74,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
                 vec![#(#db_fields,)*]
             }
 
-            pub async fn select(pool: &::sqlx::sqlite::SqlitePool, id: i32) -> #ident {
+            pub async fn select(pool: &::sqlx::sqlite::SqlitePool, id: i32) -> ::core::result::Result<#ident, ::sqlx::error::Error> {
                 let select_string = format!(
                     r#"SELECT {} FROM {} WHERE ID = $1;"#,
                     #db_columns, #db_name
@@ -84,10 +84,9 @@ pub fn derive(input: TokenStream) -> TokenStream {
                     .bind(id)
                     .fetch_one(pool)
                     .await
-                    .unwrap()
             }
 
-            pub async fn insert(&self, pool: &::sqlx::sqlite::SqlitePool) -> ::std::vec::Vec<::sqlx::sqlite::SqliteRow> {
+            pub async fn insert(&self, pool: &::sqlx::sqlite::SqlitePool) -> ::core::result::Result<::sqlx::sqlite::SqliteQueryResult, ::sqlx::error::Error> {
                 let insert_fields = #ident::fields()
                     .iter()
                     .enumerate()
@@ -102,12 +101,11 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
                 ::sqlx::query(insert_string.as_str())
                     #(.bind(&self.#field_idents))*
-                    .fetch_all(pool)
+                    .execute(pool)
                     .await
-                    .unwrap()
             }
 
-            pub async fn delete(pool: &::sqlx::sqlite::SqlitePool, id: i32) {
+            pub async fn delete(pool: &::sqlx::sqlite::SqlitePool, id: i32) -> ::core::result::Result<sqlx::sqlite::SqliteQueryResult, ::sqlx::error::Error> {
                 let query = format!(
                     r#"DELETE FROM {} WHERE ID = $1;"#,
                     #db_name
@@ -117,7 +115,6 @@ pub fn derive(input: TokenStream) -> TokenStream {
                     .bind(id)
                     .execute(pool)
                     .await
-                    .unwrap();
             }
         }
     };
