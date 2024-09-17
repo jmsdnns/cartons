@@ -8,19 +8,19 @@ use syn::{
 };
 
 #[derive(Debug)]
-struct DBModel {
+struct ORMModel {
     name: String,
-    fields: Vec<DBField>,
+    fields: Vec<ORMField>,
 }
 
 #[derive(Debug)]
-struct DBField {
+struct ORMField {
     name: String,
     ty: String,
     ident: Ident,
 }
 
-fn get_db_field(field: &Field) -> Option<DBField> {
+fn get_db_field(field: &Field) -> Option<ORMField> {
     let ident = match &field.ident {
         Some(id) => Some(format!("{}", id)),
         None => {
@@ -38,7 +38,7 @@ fn get_db_field(field: &Field) -> Option<DBField> {
         }
     };
 
-    let db_field = DBField {
+    let db_field = ORMField {
         name: ident.unwrap(),
         ty: type_ident.unwrap(),
         ident: field.ident.clone().unwrap(),
@@ -47,7 +47,7 @@ fn get_db_field(field: &Field) -> Option<DBField> {
     Some(db_field)
 }
 
-#[proc_macro_derive(DBModel)]
+#[proc_macro_derive(MiniORM)]
 pub fn derive(input: TokenStream) -> TokenStream {
     let DeriveInput { ident, data, .. } = parse_macro_input!(input as DeriveInput);
 
@@ -59,7 +59,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
         _ => panic!("Uhhh wat"),
     };
 
-    let db_model = DBModel {
+    let db_model = ORMModel {
         name: ident.to_string().to_lowercase(),
         fields: fields.iter().filter_map(get_db_field).collect(),
     };

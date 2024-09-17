@@ -1,9 +1,9 @@
 #![allow(dead_code)]
-use dbmodel::DBModel;
+use miniorm::MiniORM;
 use sqlx::sqlite::{SqliteConnectOptions, SqlitePool};
 use std::fs;
 
-#[derive(DBModel, sqlx::FromRow, Debug)]
+#[derive(MiniORM, sqlx::FromRow, Debug)]
 pub struct Book {
     id: i32,
     title: String,
