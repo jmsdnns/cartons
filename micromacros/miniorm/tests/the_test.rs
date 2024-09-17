@@ -15,8 +15,11 @@ pub struct Book {
 async fn gen_select() {
     // setup
     let pool = mkdb("gen_select").await;
+
+    // Put book instance in database without ORM
     addbook(&pool, 42, "Meow", 10, "Sierra").await;
 
+    // Load book instance with ORM and check values
     let b = Book::select(&pool, 42).await.unwrap();
     assert_eq!(b.id, 42);
     assert_eq!(b.title, "Meow".to_string());
@@ -32,6 +35,7 @@ async fn gen_insert() {
     // setup
     let pool = mkdb("gen_insert").await;
 
+    // Create book instance and save to DB with ORM
     let book = Book {
         id: 1728,
         title: "My Story".to_string(),
@@ -42,28 +46,35 @@ async fn gen_insert() {
     let count = result.rows_affected();
     assert_eq!(count, 1);
 
+    // Load new instance of book without ORM and compare
     let b = loadbook(&pool, 1728).await.unwrap();
     assert_eq!(b.id, book.id);
     assert_eq!(b.title, book.title);
     assert_eq!(b.pages, book.pages);
     assert_eq!(b.author, book.author);
 
+    // teardown
     rmdb("gen_insert");
 }
 
 #[tokio::test]
 async fn gen_update() {
+    // setup
     let pool = mkdb("gen_update").await;
+
+    // Put book instance in database and load it without ORM
     addbook(&pool, 42, "Meow", 10, "Sierra").await;
     let mut book = loadbook(&pool, 42).await.unwrap();
 
+    // Change a value and update it in the DB with ORM
     book.pages = 14;
-
     book.update(&pool).await.unwrap();
-    let b = loadbook(&pool, 42).await.unwrap();
 
+    // Load new instance of book without ORM and compare
+    let b = loadbook(&pool, 42).await.unwrap();
     assert_eq!(b.pages, book.pages);
 
+    // teardown
     rmdb("gen_update");
 }
 
@@ -71,11 +82,16 @@ async fn gen_update() {
 async fn gen_delete() {
     // setup
     let pool = mkdb("gen_delete").await;
+
+    // Put book instance in database without ORM
     addbook(&pool, 42, "Meow", 10, "Sierra").await;
 
+    // Delete book from DB with ORM and verify single row is gone
     let result = Book::delete(&pool, 42).await.unwrap();
     let count = result.rows_affected();
     assert_eq!(count, 1);
+
+    // Try loading book without ORM and verify error is thrown
     loadbook(&pool, 42).await.unwrap_err();
 
     // teardown
