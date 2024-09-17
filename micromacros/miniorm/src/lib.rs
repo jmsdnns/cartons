@@ -51,7 +51,7 @@ fn get_db_field(field: &Field) -> Option<ORMField> {
 pub fn derive(input: TokenStream) -> TokenStream {
     let DeriveInput { ident, data, .. } = parse_macro_input!(input as DeriveInput);
 
-    let fields = match data {
+    let struct_fields = match data {
         Struct(DataStruct {
             fields: Named(FieldsNamed { ref named, .. }),
             ..
@@ -59,27 +59,26 @@ pub fn derive(input: TokenStream) -> TokenStream {
         _ => panic!("Uhhh wat"),
     };
 
-    let db_model = ORMModel {
+    let model = ORMModel {
         name: ident.to_string().to_lowercase(),
-        fields: fields.iter().filter_map(get_db_field).collect(),
+        fields: struct_fields.iter().filter_map(get_db_field).collect(),
     };
 
-    let db_name = db_model.name.clone();
-    let db_fields: Vec<String> = db_model.fields.iter().map(|f| f.name.to_string()).collect();
-    let db_columns = db_fields.join(",");
-
-    let column_idents: Vec<&Ident> = db_model.fields.iter().map(|f| &f.ident).collect();
+    let table_name = model.name.clone();
+    let column_names: Vec<String> = model.fields.iter().map(|f| f.name.to_string()).collect();
+    let column_idents: Vec<&Ident> = model.fields.iter().map(|f| &f.ident).collect();
 
     let result = quote! {
         impl #ident {
             pub fn fields() -> ::std::vec::Vec<&'static str> {
-                vec![#(#db_fields,)*]
+                vec![#(#column_names,)*]
             }
 
             pub async fn select(pool: &::sqlx::sqlite::SqlitePool, id: i32) -> ::core::result::Result<#ident, ::sqlx::error::Error> {
                 let select_string = format!(
                     r#"SELECT {} FROM {} WHERE ID = $1;"#,
-                    #db_columns, #db_name
+                    #ident::fields().join(","),
+                    #table_name
                 );
 
                 ::sqlx::query_as(select_string.as_str())
@@ -98,7 +97,9 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
                 let insert_string = format!(
                     r#"INSERT INTO {} ({}) VALUES ({});"#,
-                    #db_name, #db_columns, insert_fields
+                    #table_name,
+                    #ident::fields().join(","),
+                    insert_fields
                 );
 
                 ::sqlx::query(insert_string.as_str())
@@ -118,7 +119,8 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
                 let update_string = format!(
                     r#"UPDATE {} SET {} WHERE id = $1;"#,
-                    #db_name, update_fields
+                    #table_name,
+                    update_fields
                 );
 
                 ::sqlx::query(update_string.as_str())
@@ -130,7 +132,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
             pub async fn delete(pool: &::sqlx::sqlite::SqlitePool, id: i32) -> ::core::result::Result<sqlx::sqlite::SqliteQueryResult, ::sqlx::error::Error> {
                 let query = format!(
                     r#"DELETE FROM {} WHERE ID = $1;"#,
-                    #db_name
+                    #table_name
                 );
 
                 ::sqlx::query(query.as_str())
