@@ -52,6 +52,22 @@ async fn gen_insert() {
 }
 
 #[tokio::test]
+async fn gen_update() {
+    let pool = mkdb("gen_update").await;
+    addbook(&pool, 42, "Meow", 10, "Sierra").await;
+    let mut book = loadbook(&pool, 42).await.unwrap();
+
+    book.pages = 14;
+
+    book.update(&pool).await.unwrap();
+    let b = loadbook(&pool, 42).await.unwrap();
+
+    assert_eq!(b.pages, book.pages);
+
+    rmdb("gen_update");
+}
+
+#[tokio::test]
 async fn gen_delete() {
     // setup
     let pool = mkdb("gen_delete").await;

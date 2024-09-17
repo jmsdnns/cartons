@@ -4,7 +4,7 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{
     parse_macro_input, Data::Struct, DataStruct, DeriveInput, Field, Fields::Named, FieldsNamed,
-    Path, Type, TypePath,
+    Ident, Path, Type, TypePath,
 };
 
 #[derive(Debug)]
@@ -17,6 +17,7 @@ struct DBModel {
 struct DBField {
     name: String,
     ty: String,
+    ident: Ident,
 }
 
 fn get_db_field(field: &Field) -> Option<DBField> {
@@ -40,6 +41,7 @@ fn get_db_field(field: &Field) -> Option<DBField> {
     let db_field = DBField {
         name: ident.unwrap(),
         ty: type_ident.unwrap(),
+        ident: field.ident.clone().unwrap(),
     };
 
     Some(db_field)
@@ -66,7 +68,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
     let db_fields: Vec<String> = db_model.fields.iter().map(|f| f.name.to_string()).collect();
     let db_columns = db_fields.join(",");
 
-    let field_idents = fields.iter().map(|f| &f.ident);
+    let column_idents: Vec<&Ident> = db_model.fields.iter().map(|f| &f.ident).collect();
 
     let result = quote! {
         impl #ident {
@@ -100,7 +102,27 @@ pub fn derive(input: TokenStream) -> TokenStream {
                 );
 
                 ::sqlx::query(insert_string.as_str())
-                    #(.bind(&self.#field_idents))*
+                    #(.bind(&self.#column_idents))*
+                    .execute(pool)
+                    .await
+            }
+
+            pub async fn update(&self, pool: &::sqlx::sqlite::SqlitePool) -> ::core::result::Result<::sqlx::sqlite::SqliteQueryResult, ::sqlx::error::Error> {
+                let update_fields = #ident::fields()
+                    .iter()
+                    .filter(|f| **f != "id")
+                    .enumerate()
+                    .map(|(idx, f)| format!("{} = ${}", f, idx+2))
+                    .collect::<Vec<String>>()
+                    .join(", ");
+
+                let update_string = format!(
+                    r#"UPDATE {} SET {} WHERE id = $1;"#,
+                    #db_name, update_fields
+                );
+
+                ::sqlx::query(update_string.as_str())
+                    #(.bind(&self.#column_idents))*
                     .execute(pool)
                     .await
             }
