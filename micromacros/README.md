@@ -4,7 +4,7 @@ There were several projects here. Now just one. That will change soon enough.
 
 ## Projects
 
-* [Vek](vek/): Using declarative macros to reimplement parts of the builtin `vec!`
+* [Vek](vek/): Using declarative macros to reimplement parts of the builtin `vec!` [ [tests](tests/the_test.rs) ]
 * [Iterable Structs](iterable/): A macro that uses Rust's `Any` type to allow iterating across field name-value pairs, similar to what one might do in Python. The Any type essentially erases the actual type information, but reflection can be used to go back from the `Any` to actual types. [ [tests](iterable/tests/the_test.rs) ]
 
 ## CLI
