@@ -1,0 +1,14 @@
+[package]
+name = "kees"
+version = "0.2.0"
+edition = "2021"
+resolver = "2"
+
+[dependencies]
+
+[target.'cfg( target_os = "linux" )'.dependencies]
+keyring = { version = "3.3.0", features = ["sync-secret-service"]}
+#linux-keyutils = { version = "0.2.4", features = ["std"]}
+
+[target.'cfg( target_os = "macos" )'.dependencies]
+keyring = { version = "3.3.0", features = ["apple-native"]}
