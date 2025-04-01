@@ -1,0 +1,9 @@
+execute: cat meow
+upload:
+  local_path: meow.cat
+  remote_path: /tmp/runaway.cat
+execute: echo "kitty? where are you?"
+download:
+  remote_path: /tmp/runaway.cat
+  local_path: happy.cat
+execute: cat meow

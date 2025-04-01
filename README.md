@@ -23,6 +23,7 @@ Each carton is an independent Rust project. Many of them exist to express common
 * [CLI Tools](cli-tools/): Multiple CLI tools, all built using the Clap library.
 * [Numpy-style Arrays](rusty-numpy/): Numpy users will feel right at home with Rust's ndarray.
 * [Async SSH Pools](async-ssh/): Demonstrates how to run the same command on multiple remote machines simultaneously. Reads a toml config file for information about the remote machines. Includes a .justfile that knows how use Lima VMs for the remotes.
+* [Plan Parser](plan-parser/): Uses the winnow crate to parse input for tasks on remote machines via 3 commands: execute, upload, download.
 * [Micro Macros](micromacros/): Examples of different kinds of macros. 
 * [Signed Tokens](signed-tokens/): Creates signed JWT tokens and demonstrates how validation of JWT fields is automatic.
 * [Keychains](kees/): Store data securely on macOS with keychains or on Linux secret service sync.
